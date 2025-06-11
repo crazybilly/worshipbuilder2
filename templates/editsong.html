@@ -1,0 +1,29 @@
+<!doctype html>
+
+<title>Edit Song</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+<body>
+
+{% block editor %}
+
+{% for the_song in the_song %}
+<form action="" method = "">
+    <input type='text' name='song_name' value = "{{ the_song['song_name']}}">
+    <select name='song_key'>
+    {% for the_key in possible_keys %}
+        <option  {%if the_key == the_song['song_key'] %} selected="selected"  {% endif %} >
+            {{the_key}}
+        </option>
+    {% endfor %}
+    </select>
+    <textarea cols='65' rows = '40' name='song_lyrics'>{{ the_song['song_lyrics'] }}</textarea>
+    <br>
+    <button type="button" class="button" onclick="window.history.back();">Cancel</button>
+    <input type='submit' value='Save'>
+</form>
+{% endfor %}
+
+{% endblock %}
+</body>
