@@ -140,3 +140,11 @@ input[type=submit] {
   background-color:rgb(216, 224, 230);
   border: 1px solid #377ba8;
 }
+
+
+.ui-modal {
+  background-color: #CCCCCC;
+  border: 1px solid #377ba8;
+  position: fixed;
+  z-index: 1;
+}

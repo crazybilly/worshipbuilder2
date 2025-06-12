@@ -2,6 +2,8 @@
 
 <title>Build Sets</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='script.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='DragDropTouch.js')}}"></script>
 
 
 <body>
@@ -15,7 +17,16 @@
         </select>
 
         <button>go</button>
-        <button>new</button>
+    
+    <br>
+        <img src="{{ url_for('static', filename = 'new-set.png') }}" id="newsetbutton">
+        <div class="ui-modal" id = 'newsetpicker'>
+             <form name="newset" method="POST" enctype="multipart/form-data"
+              action="{{ url_for('newset') }}">
+                 <input type="date"  id="newset_date" name="newset_date">
+                 <input type="submit" value ='new'>
+             </form>
+        </div>
 
 
         {% block the_set%}
@@ -43,7 +54,7 @@
     <input value="search"></input>
     <ul>
         {% for song in songs %}
-        <li id="{{ song['song_id'] }}">
+        <li id="{{ song['song_id'] }}" draggable="true">
             {{ song['song_name'] }}
             <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
                  <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">

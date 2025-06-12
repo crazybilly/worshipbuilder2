@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -31,6 +31,10 @@ class SongsInSets(db.Model):
     song_order = db.Column(db.Integer)
 
 
+
+
+
+
 def get_songs_by_set(the_set_id):
     songs_in_set = (db.session.query(SongsInSets, Songs)
         .where(SongsInSets.set_id == the_set_id)
@@ -60,6 +64,8 @@ def get_songs():
     return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set)
 
 
+
+
 @app.route('/editsong/<the_song_id>')
 def editsong(the_song_id):
     if the_song_id == '99999999':  
@@ -81,6 +87,16 @@ def editsong(the_song_id):
     return render_template('editsong.html', the_song = the_song, possible_keys = possible_keys)
 
     
+@app.route('/newset', methods=['POST'])
+def newset():
+
+    newset_date = request.form['newset_date']
+
+    db.session.add(Sets(set_date = newset_date))
+    db.session.commit()
+
+    return redirect(url_for('get_songs'))
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug = True)
