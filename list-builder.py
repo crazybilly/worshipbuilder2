@@ -25,10 +25,26 @@ class Songs(db.Model):
 
 class SongsInSets(db.Model):
     __tablename__ = 'songs_in_sets'
-    songs_in_sets_id = db.Column(db.Integer, primary_key=True)
+    song_in_sets_id = db.Column(db.Integer, primary_key=True)
     set_id     = db.Column(db.Integer)
     song_id    = db.Column(db.Integer)
     song_order = db.Column(db.Integer)
+
+
+def get_songs_by_set(the_set_id):
+    songs_in_set = (db.session.query(SongsInSets, Songs)
+        .where(SongsInSets.set_id == the_set_id)
+        .filter(SongsInSets.song_id == Songs.song_id)
+        .order_by(SongsInSets.song_order)
+        .all())
+
+    the_results = list() 
+
+    for x in songs_in_set:
+        the_results.append(x[1])
+
+    return(the_results)
+    
 
 
 
@@ -37,10 +53,11 @@ class SongsInSets(db.Model):
 def get_songs():
     songs = db.session.query(Songs).order_by(Songs.song_name).all()
     sets = db.session.query(Sets).order_by(Sets.set_date.desc()).all()
+    
+    first_set_id = sets[0].set_id
+    songs_in_this_set = get_songs_by_set(first_set_id)
 
-
-
-    return render_template('setbuilder.html', songs = songs, sets =sets)
+    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set)
 
 
 @app.route('/editsong/<the_song_id>')

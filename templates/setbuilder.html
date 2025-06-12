@@ -20,7 +20,14 @@
 
         {% block the_set%}
             <div id = 'the_set'>
-
+                {% for song in songs_in_this_set %}
+                    <li id="{{ song['song_id'] }}">
+                        {{ song['song_name'] }}
+                        <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
+                            <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">
+                        </a>
+                    </li>
+                {% endfor %}
             </div>
         {% endblock%}
         <button>save</button>
