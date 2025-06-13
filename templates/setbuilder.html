@@ -2,8 +2,11 @@
 
 <title>Build Sets</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='script.js')}}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='DragDropTouch.js')}}"></script>
+
+
+<!-- <script type="text/javascript" src="{{ url_for('static', filename='DragDropTouch.js')}}"></script> --> 
 
 
 <body>
@@ -27,6 +30,9 @@
                  <input type="submit" value ='new'>
              </form>
         </div>
+
+<div id="status" class="status-indicator">Saved!</div>
+
 
 
         {% block the_set%}
@@ -52,7 +58,7 @@
     </a>
     <br>
     <input value="search"></input>
-    <ul>
+    <ul id="all_songs">
         {% for song in songs %}
         <li id="{{ song['song_id'] }}" draggable="true">
             {{ song['song_name'] }}

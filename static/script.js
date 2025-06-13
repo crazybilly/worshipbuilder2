@@ -42,6 +42,77 @@ window.onclick = function(event) {
 }
 
 
+// --- Drag and Drop Support ---
+
+const availableList = document.getElementById('all_songs');
+const dropzoneList = document.getElementById('the_set');
+
+// --- Function to show a brief "Saved" message ---
+const showSavedMessage = () => {
+    const statusDiv = document.getElementById('status');
+    statusDiv.classList.add('visible');
+    setTimeout(() => {
+        statusDiv.classList.remove('visible');
+    }, 1500); // Message disappears after 1.5 seconds
+};
+        
+        // --- Function to save the state of both lists to the backend ---
+const saveListsState = async () => {
+    // 1. Get all <li> elements from each list and extract their text content.
+    const availableItems = Array.from(availableList.querySelectorAll('li')).map(li => li.id);
+    const dropzoneItems = Array.from(dropzoneList.querySelectorAll('li')).map(li => li.id);
+    
+    // 2. Prepare the data payload for the AJAX request.
+    const payload = {
+        available: availableItems,
+        dropzone: dropzoneItems
+    };
+
+    console.log('Sending data to server:', payload);
+
+    // 3. Send the data to the Flask backend using the Fetch API.
+    try {
+        const response = await fetch('/save_sets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Server response:', result);
+        showSavedMessage(); // Show visual feedback on success
+
+    } catch (error) {
+        console.error('Error saving lists:', error);
+        // Here you could show an error message to the user
+    }
+};
+
+
+saveListsState();
+
+
+
+// --- Initialize SortableJS for both lists ---
+const options = {
+    group: 'shared', // This is key! It allows dragging between lists with the same group name.
+    animation: 150, // Animation speed in ms.
+    // The 'onEnd' event is triggered when a drag-and-drop operation is completed.
+    onEnd: function (evt) {
+        // We call our save function whenever an item is moved.
+        saveListsState();
+    }
+};
+
+new Sortable(availableList, options);
+new Sortable(dropzoneList, options);
+
 
 
 

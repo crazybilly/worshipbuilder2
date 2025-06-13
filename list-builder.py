@@ -50,6 +50,33 @@ def get_songs_by_set(the_set_id):
     return(the_results)
     
 
+def save_a_set(the_set_id, the_song_ids, db = db):
+
+    # delete all of the sets rows
+    this_sets_current_songs = db.session.query(SongsInSets).filter_by(set_id = the_set_id).all()
+    print('deleting all songs in set ' + str(the_set_id))
+    for s in this_sets_current_songs:
+        db.session.delete(s)
+    db.session.commit()
+
+
+    # insert rows for the_song_ids
+
+    the_new_rows = list()
+
+    for i in range(len(the_song_ids)) :
+        newsonginset = SongsInSets(set_id = the_set_id, song_id = the_song_ids[i], song_order = i + 1)
+        the_new_rows.append(newsonginset)
+
+    print('adding new songs to set ' + str(the_set_id))
+
+    db.session.add_all(the_new_rows)
+    db.session.commit()
+       
+    return(1)
+
+
+
 
 
 
@@ -94,6 +121,20 @@ def newset():
 
     db.session.add(Sets(set_date = newset_date))
     db.session.commit()
+
+    return redirect(url_for('get_songs'))
+
+
+
+@app.route('/save_sets', methods=['POST'])
+def save_sets():
+
+    data = request.get_json()
+    the_set_order = data.get('dropzone')
+
+    if len(the_set_order) > 0 :
+
+        print('this is where we call the saving_set function')
 
     return redirect(url_for('get_songs'))
 

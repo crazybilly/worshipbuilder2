@@ -148,3 +148,12 @@ input[type=submit] {
   position: fixed;
   z-index: 1;
 }
+
+
+#status { 
+  display: none;
+}
+
+.visible { 
+  display: block !important;
+}
