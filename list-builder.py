@@ -37,10 +37,6 @@ class SongsInSets(db.Model):
 
 
 
-
-
-
-
 def get_songs_by_set(the_set_id):
     songs_in_set = (db.session.query(SongsInSets, Songs)
         .where(SongsInSets.set_id == the_set_id)
@@ -93,8 +89,6 @@ def get_songs(selected_set=None):
     songs = db.session.query(Songs).order_by(Songs.song_name).all()
     sets = db.session.query(Sets).order_by(Sets.set_date.desc()).all()
 
-    print('we should see set ' + str(selected_set))
-
     if selected_set is None :
         selected_set = sets[0].set_id
 
@@ -111,6 +105,9 @@ def changeset():
     the_selected_set = int(the_selected_set)
     print('changing set to ' + str(the_selected_set))
     return redirect(url_for('get_songs', selected_set=the_selected_set))
+
+
+
 
 
 @app.route('/editsong/<the_song_id>')
@@ -133,6 +130,9 @@ def editsong(the_song_id):
 
     return render_template('editsong.html', the_song = the_song, possible_keys = possible_keys)
 
+
+
+
     
 @app.route('/newset', methods=['POST'])
 def newset():
@@ -143,6 +143,9 @@ def newset():
     db.session.commit()
 
     return redirect(url_for('get_songs'))
+
+
+
 
 
 
@@ -157,6 +160,11 @@ def save_sets():
     save_a_set(the_set_id=the_selected_set, the_song_ids=the_set_order, db = db)
 
     return redirect(url_for('get_songs'))
+
+
+
+
+
 
 
 if __name__ == '__main__':

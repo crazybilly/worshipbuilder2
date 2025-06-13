@@ -16,7 +16,6 @@ month = month + 1;
 month = month.toString().padStart(2,'0'); // Gets the month as a number (0-11, where 0 is January)
 var day = today.getDate().toString().padStart(2,'0'); // Gets the day of the month (1-31)
 var today_str = year + '-' + month + '-' + day
-console.log(today_str)
 
 
 var newset_date = document.getElementById("newset_date");
@@ -116,6 +115,32 @@ new Sortable(dropzoneList, options);
 
 
 
+the_songs_ul= document.getElementById('all_songs');
+the_song_lis = the_songs_ul.getElementsByTagName('li');
+
+var current_letter = '';
+var first_letter_songs = [];
+for (i = 0; i < the_song_lis.length; i++) {
+
+  the_song_name = the_song_lis[i].textContent.trim();
+  first_letter = the_song_name[0];
+  if (first_letter != current_letter) { 
+
+      // first_letter_songs.push(the_song_lis[i]);
+
+      the_heading = document.createElement('h3');
+      the_heading_content = document.createTextNode(first_letter);
+      the_heading.appendChild(the_heading_content);
+      
+
+      the_song_lis[i].before(the_heading);
+  }
+  current_letter = first_letter;
+}
+
+
+
+
 
 
 
@@ -135,6 +160,8 @@ function filterSongs() {
   filter = input.value.toUpperCase();
   ul = document.getElementById("all_songs");
   li = ul.getElementsByTagName('li');
+  h3s = ul.getElementsByTagName('h3');
+
 
   // Loop through all list items, and hide those who don't match the search query
   for (i = 0; i < li.length; i++) {
@@ -145,4 +172,17 @@ function filterSongs() {
       li[i].style.display = "none";
     }
   }
+
+  li_array = Array.from(li);
+  visible_lis = li_array.filter(element => element.offsetParent !== null);
+  n_visible = visible_lis.length;
+
+  for (i = 0; i < h3s.length; i++) {
+    if (n_visible <= 25) {
+      h3s[i].style.display = "none";
+    } else {
+      h3s[i].style.display = "";
+    }
+  }
+
 };

@@ -73,14 +73,16 @@
     <input type="text" placeholder="search" onkeyup="filterSongs()" id="songsearch">
     <ul id="all_songs">
         {% for song in songs %}
-        <li id="{{ song['song_id'] }}" draggable="true">
-            {{ song['song_name'] }}
-            <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
-                 <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">
-            </a>
-
-        </li>
+                <li id="{{ song['song_id'] }}" draggable="true">
+                    {{ song['song_name'] }}
+                    <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
+                        <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">
+                    </a>
+                </li>
         {% endfor %}
     </ul>
     {% endblock %}
 </body>
+
+
+
