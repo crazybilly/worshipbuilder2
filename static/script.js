@@ -115,8 +115,18 @@ new Sortable(dropzoneList, options);
 
 
 
-// -- Search songs --------------
 
+
+
+
+  }
+
+})(window, document, undefined);
+
+
+
+
+// -- Search songs --------------
 
 function filterSongs() {
   // Declare variables
@@ -136,15 +146,3 @@ function filterSongs() {
     }
   }
 };
-
-
-songSearchInput = document.getElementById('songserch');
-if (songSearchInput) { // Check if the element exists before adding event listener
-      songSearchInput.addEventListener('keyup', filterSongs);
-    }
-
-
-
-  }
-
-})(window, document, undefined);
