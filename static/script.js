@@ -61,11 +61,13 @@ const saveListsState = async () => {
     // 1. Get all <li> elements from each list and extract their text content.
     const availableItems = Array.from(availableList.querySelectorAll('li')).map(li => li.id);
     const dropzoneItems = Array.from(dropzoneList.querySelectorAll('li')).map(li => li.id);
+    const the_selected_set = document.getElementById('set_selector').value;
     
     // 2. Prepare the data payload for the AJAX request.
     const payload = {
         available: availableItems,
-        dropzone: dropzoneItems
+        dropzone: dropzoneItems,
+        the_selected_set: the_selected_set
     };
 
     console.log('Sending data to server:', payload);
@@ -95,9 +97,6 @@ const saveListsState = async () => {
 };
 
 
-saveListsState();
-
-
 
 // --- Initialize SortableJS for both lists ---
 const options = {
@@ -113,6 +112,36 @@ const options = {
 new Sortable(availableList, options);
 new Sortable(dropzoneList, options);
 
+
+
+
+// -- Search songs --------------
+
+
+function filterSongs() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('songsearch');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("all_songs");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    txtValue = li[i].textContent || li[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+};
+
+
+songSearchInput = document.getElementById('songserch');
+if (songSearchInput) { // Check if the element exists before adding event listener
+      songSearchInput.addEventListener('keyup', filterSongs);
+    }
 
 
 

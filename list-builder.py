@@ -33,6 +33,12 @@ class SongsInSets(db.Model):
 
 
 
+# --- FUNCTIONS ----------------------------
+
+
+
+
+
 
 
 def get_songs_by_set(the_set_id):
@@ -78,19 +84,33 @@ def save_a_set(the_set_id, the_song_ids, db = db):
 
 
 
+# -- ROUTES ---------------------------------------------------------
 
 
+@app.route('/sets/<int:selected_set>')
 @app.route('/')
-def get_songs():
+def get_songs(selected_set=None):
     songs = db.session.query(Songs).order_by(Songs.song_name).all()
     sets = db.session.query(Sets).order_by(Sets.set_date.desc()).all()
-    
-    first_set_id = sets[0].set_id
-    songs_in_this_set = get_songs_by_set(first_set_id)
 
-    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set)
+    print('we should see set ' + str(selected_set))
+
+    if selected_set is None :
+        selected_set = sets[0].set_id
+
+    songs_in_this_set = get_songs_by_set(selected_set)
+
+    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set, selected_set = selected_set)
 
 
+
+
+@app.route('/changeset', methods=['POST'])
+def changeset():
+    the_selected_set = request.form['set_selector']
+    the_selected_set = int(the_selected_set)
+    print('changing set to ' + str(the_selected_set))
+    return redirect(url_for('get_songs', selected_set=the_selected_set))
 
 
 @app.route('/editsong/<the_song_id>')
@@ -131,10 +151,10 @@ def save_sets():
 
     data = request.get_json()
     the_set_order = data.get('dropzone')
+    the_selected_set = data.get('the_selected_set')
+    print('selected set is ' + str(the_selected_set))
 
-    if len(the_set_order) > 0 :
-
-        print('this is where we call the saving_set function')
+    save_a_set(the_set_id=the_selected_set, the_song_ids=the_set_order, db = db)
 
     return redirect(url_for('get_songs'))
 

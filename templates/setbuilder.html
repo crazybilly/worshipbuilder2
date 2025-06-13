@@ -13,14 +13,27 @@
     {% block setlists %}
         <h1>Build & Edits Song Lists</h1>
         <h2>Sets</h2>
-        <select>
-            {% for set in sets %}
-                <option id="{{ set['set_id'] }}">{{ set['set_date'] }}</option>
-            {% endfor %}
-        </select>
-
-        <button>go</button>
     
+        <form name="set_selection" method='POST' action="{{ url_for('changeset') }}" enctype="multipart/form-data">
+    
+            <select id = 'set_selector' name="set_selector">
+                {% for set in sets %}
+                    <option 
+                            id="{{ set['set_id'] }}" 
+                            value="{{ set['set_id'] }}"
+                            {% if set['set_id'] == selected_set %}
+                                selected
+                            {% endif %}
+                    >
+                        {{ set['set_date'] }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input type = 'submit' id="goto-different-set-button" value = 'go'>
+        </form>
+
+
     <br>
         <img src="{{ url_for('static', filename = 'new-set.png') }}" id="newsetbutton">
         <div class="ui-modal" id = 'newsetpicker'>
@@ -30,6 +43,7 @@
                  <input type="submit" value ='new'>
              </form>
         </div>
+
 
 <div id="status" class="status-indicator">Saved!</div>
 
@@ -47,8 +61,7 @@
                 {% endfor %}
             </div>
         {% endblock%}
-        <button>save</button>
-        <button>publish</button>
+        <button id = 'publish-button'>publish</button>
     {% endblock %}
 
     {% block allsongs %}
@@ -57,7 +70,7 @@
         <span class = 'button'>New Song</span>
     </a>
     <br>
-    <input value="search"></input>
+    <input type="text" placeholder="search" onkeyup="filterSongs()" id="songsearch">
     <ul id="all_songs">
         {% for song in songs %}
         <li id="{{ song['song_id'] }}" draggable="true">
