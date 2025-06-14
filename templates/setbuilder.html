@@ -47,9 +47,10 @@
 
 <div id="status" class="status-indicator">Saved!</div>
 
+    {% endblock %}
 
 
-        {% block the_set%}
+    {% block the_set%}
             <div id = 'the_set'>
                 {% for song in songs_in_this_set %}
                     <li id="{{ song['song_id'] }}">
@@ -60,9 +61,10 @@
                     </li>
                 {% endfor %}
             </div>
-        {% endblock%}
-        <button id = 'publish-button'>publish</button>
-    {% endblock %}
+        <a href = {{ url_for('publish_set', the_set_id = selected_set)  }} >
+            <img src = {{ url_for('static', filename = 'publish-set.png') }}>
+        </a>
+    {% endblock%}
 
     {% block allsongs %}
     <h2>Songs</h2>

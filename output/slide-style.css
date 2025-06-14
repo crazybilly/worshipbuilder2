@@ -1,0 +1,53 @@
+.slide p {
+    /* font-size: 3em; */
+    line-height: 1;
+    font-weight: bold;
+    font-family: Calibri;
+    color: #aaaaaa;
+    margin-top: 0;
+    margin-left: .2em;
+}
+
+div.slide h1 {
+    color: #AAAAAA;
+    margin-left: .7em;
+}
+
+
+div.slide h4 {
+    background: #f7dfad;
+    color: #AAAAAA;
+    width: 100%;
+    text-align: center;
+    font-size: 80%;
+    height: 1.5em;
+    padding-top: .15em;
+    position: fixed;
+    bottom: 0;
+}
+
+body {
+    background-color: #101010;
+}
+
+.slide a {
+  text-decoration: underline;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+/*
+
+@media (orientation: landscape) {
+    .slide p {
+        font-size: 10.5vh;
+    }
+}
+
+@media (orientation: portrait) {
+    .slide p {
+        font-size: 5vw;
+    }
+}
+
+*/

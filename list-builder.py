@@ -1,5 +1,10 @@
-from flask import Flask, jsonify, render_template, redirect, url_for, request
+import os
+import re
+from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
+
+root_path = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
+static_path = root_path + 'static\\'
 
 
 from creds import db_user, db_pass
@@ -31,18 +36,31 @@ class SongsInSets(db.Model):
     song_order = db.Column(db.Integer)
 
 
+class LiturgicalSundays(db.Model):
+    __tablename__ = 'liturgical_sundays'
+    liturgical_key  = db.Column(db.Integer, primary_key = True)
+    sunday_dt       = db.Column(db.Date)
+    sunday_title    = db.Column(db.String(255))
+    sunday_url      = db.Column(db.String(255))
+    liturgical_year = db.Column(db.String(255))
+
+
 
 
 # --- FUNCTIONS ----------------------------
 
-
-
-def get_songs_by_set(the_set_id):
+def songs_in_set_query(the_set_id):
     songs_in_set = (db.session.query(SongsInSets, Songs)
         .where(SongsInSets.set_id == the_set_id)
         .filter(SongsInSets.song_id == Songs.song_id)
         .order_by(SongsInSets.song_order)
         .all())
+    
+    return songs_in_set
+
+
+def get_songs_by_set(the_set_id):
+    songs_in_set = songs_in_set_query(the_set_id = the_set_id)
 
     the_results = list() 
 
@@ -116,12 +134,10 @@ def editsong(the_song_id):
         the_song = list()
         blank_song = {"song_id" : '', "song_name" : '', "song_key" : '', "song_lyrics" : ''}
         print('youre making a new song')
-        print(blank_song)
         the_song.append(blank_song)
     else:
         the_song = db.session.query(Songs).where(Songs.song_id == the_song_id).all()
-        print('getting existing song')
-        print(the_song_id)
+        print('getting existing song' + str(the_song_id))
 
     possible_keys = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     print(the_song)
@@ -162,7 +178,63 @@ def save_sets():
     return redirect(url_for('get_songs'))
 
 
+@app.route('/publish_set/<int:the_set_id>')
+def publish_set(the_set_id):
 
+    # build contents query
+    songs_in_set = get_songs_by_set(the_set_id=the_set_id)
+
+    the_set_date = db.session.query(Sets).where(Sets.set_id == the_set_id).one()
+    the_set_date = the_set_date.set_date 
+    print(type(the_set_date))
+
+    liturgical_sunday = (db.session.query(LiturgicalSundays)
+        .where(LiturgicalSundays.sunday_dt == the_set_date)
+    ).one()
+
+    slide_style_path = url_for('static', filename = 'slide-style.css')
+
+    '''
+    # no clue why this isn't working right. Is this going to break in production???
+    md_header_path = url_for('static', filename = 'md-header.md')
+    md_communion_path = static_path + 'md-communion.md'
+    '''
+
+    with open('static/md-header.md', 'r', encoding = 'utf-8') as file:
+        md_header = file.read()
+    with open('static/md-communion.md', 'r', encoding = 'utf-8') as file:
+        md_communion= file.read()
+
+    the_rmd = '---\ntitle: "' + liturgical_sunday.sunday_title + '"'
+    the_rmd = the_rmd + '\noutput:\n  slidy_presentation:\n    css: slide-style.css\n'
+    the_rmd = the_rmd + md_header 
+
+    for song in songs_in_set :
+        the_rmd = the_rmd + '\n' + song.song_lyrics + '\n<span class="songkey">' + song.song_key + '</span>\n\n\n'
+
+    the_rmd = the_rmd + md_communion + '\n'
+    the_rmd = the_rmd + '[lectionary](' + liturgical_sunday.sunday_url + ')'
+
+
+    final_md_path = 'output/fullset.rmd'
+
+    with open(final_md_path, 'w', encoding='utf-8') as file:
+        file.write(the_rmd)
+
+
+    final_md_path_full = "'" + root_path + final_md_path + "'"
+    final_md_path_full = re.sub(r'\\', '/',  final_md_path_full)
+
+    rmarkdown_command = '"rmarkdown::render(' + final_md_path_full + ')"'
+    rscript_command = 'Rscript -e ' + rmarkdown_command
+
+    os.system(rscript_command)
+    
+    # copy to location (or maybe don't! just point the big link at the actual file? )
+    # add link to UI
+
+
+    return redirect(url_for('get_songs', selected_set=the_set_id))
 
 
 
