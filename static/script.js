@@ -21,22 +21,24 @@ var today_str = year + '-' + month + '-' + day
 var newset_date = document.getElementById("newset_date");
 newset_date.value = today_str;
 
-var modal        = document.getElementById("newsetpicker");
-  modal.style.display = "none";
-var newsetbutton = document.getElementById("newsetbutton");
 
-newsetbutton.onclick = function() {
-  if (modal.style.display == "block") {
-    modal.style.display = "none";
+var modal_setcreator  = document.getElementById("newsetpicker");
+modal_setcreator.style.display = "none";
+
+
+var newsetbutton2 = document.getElementById("newsetbutton2");
+
+newsetbutton2.onclick = function() {
+  if (modal_setcreator.style.display == "block") {
+    modal_setcreator.style.display = "none";
   } else { 
-    modal.style.display = "block";
+    modal_setcreator.style.display = "block";
   }
-
 }
 
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target == modal_setcreator) {
+    modal_setcreator.style.display = "none";
   }
 }
 
@@ -55,6 +57,22 @@ const showSavedMessage = () => {
     }, 1500); // Message disappears after 1.5 seconds
 };
         
+
+const the_message = document.getElementById('message');
+const the_message_str = the_message.textContent.trim;
+console.log(the_message_str)
+console.log(the_message_str.length)
+
+if(the_message_str.length > 0 ){
+  the_message.style.display = 'block';
+}
+setTimeout(() => {
+  the_message.style.display = 'none'; 
+}, 1500); // Message disappears after 1.5 seconds
+
+
+
+
         // --- Function to save the state of both lists to the backend ---
 const saveListsState = async () => {
     // 1. Get all <li> elements from each list and extract their text content.

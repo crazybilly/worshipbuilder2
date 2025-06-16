@@ -1,157 +1,170 @@
-html {
-  font-family: sans-serif;
-  background: #eee;
-  padding: 1rem;
+:root {
+    --light_gray: #EEEEEE;
+    --normal_gray: #AAAAAA;
+    --dark_gray: #666666;
+    --the_blue: #377ba8;
+    --notify_yellow: cornsilk;
+
+    --btn-border-weight: 1px;
+    --btn-border-color: var(--dark_gray);
+    --btn-background: rgb(240, 240, 240);
+    --btn-padding: 1 6 1 6;
 }
+
+
+
+
 
 body {
-  max-width: 960px;
-  margin: 0 auto;
-  background: white;
+    color: var(--dark_gray);
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
 }
+
+#outer-wrapper { 
+    width: 80%;
+    margin-left: 1.5em;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: serif;
-  color: #377ba8;
-  margin: 1rem 0;
+    font-family: "Lilita One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-a {
-  color: #377ba8;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid lightgray;
-}
-
-nav {
-  background: lightgray;
-  display: flex;
-  align-items: center;
-  padding: 0 0.5rem;
-}
-
-nav h1 {
-  flex: auto;
-  margin: 0;
-}
-
-nav h1 a {
-  text-decoration: none;
-  padding: 0.25rem 0.5rem;
-}
-
-nav ul  {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-nav ul li a, nav ul li span, header .action {
-  display: block;
-  padding: 0.5rem;
-}
-
-.content {
-  padding: 0 1rem 1rem;
-}
-
-.content > header {
-  border-bottom: 1px solid lightgray;
-  display: flex;
-  align-items: flex-end;
-}
-
-.content > header h1 {
-  flex: auto;
-  margin: 1rem 0 0.25rem 0;
-}
-
-.flash {
-  margin: 1em 0;
-  padding: 1em;
-  background: #cae6f6;
-  border: 1px solid #377ba8;
-}
-
-.post > header {
-  display: flex;
-  align-items: flex-end;
-  font-size: 0.85em;
-}
-
-.post > header > div:first-of-type {
-  flex: auto;
-}
-
-.post > header h1 {
-  font-size: 1.5em;
-  margin-bottom: 0;
-}
-
-.post .about {
-  color: slategray;
-  font-style: italic;
-}
-
-.post .body {
-  white-space: pre-line;
-}
-
-.content:last-child {
-  margin-bottom: 0;
-}
-
-.content form {
-  margin: 1em 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.content label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-.content input, .content textarea {
-  margin-bottom: 1em;
-}
-
-.content textarea {
-  min-height: 12em;
-  resize: vertical;
-}
-
-input.danger {
-  color: #cc2f2e;
-}
-
-input[type=submit] {
-  align-self: start;
-  min-width: 10em;
+input, select, option, button, .btn {
+   font-family: "Lato", sans-serif;
+   color: var(--dark_gray);
+   font-size: 1rem;
 }
 
 
+.btn {
+    border: var(--btn-border-weight) solid var(--btn-border-color);
+    background: buttonface;
+    padding: .5em;
+    color:  var(--dark_gray);
+    text-decoration: none;
+    display: inline-block;
+    border-radius: .3em;
+}
+
+li {
+    display: block;
+    padding: .5em;
+    border: 1px solid var(--normal_gray);
+    background: var(--light_gray);
+    margin: .5em;
+    font-size: 1rem;
+}
+
+
+#outer_set_div {
+    position: sticky;
+    top: 0;
+    right: 0;
+    background: white;
+    padding: 1em ;
+    border: 1px solid var(--normal_gray);
+
+}
+
+#outer_set_div h2 {
+    margin-top: 0;
+}
+
+
+
+#outer_songs_div {
+
+}
+
+#outer_songs_div h2 {
+    margin-bottom: 0;
+}
+
+#set-selection {
+    display: inline;
+}
 
 #the_set {
   min-height: 5em;
-  background-color:rgb(216, 224, 230);
-  border: 1px solid #377ba8;
+  background-color:#d8e0e6;
+  border: 1px solid var(--the_blue);
+  margin: 1em 0;
+}
+
+
+#all_songs { 
+    display: block;
+    border: 1px dotted var(--light_gray);
+    background: #d8e0e6;
+    padding-left: 1em;
+
 }
 
 
 .ui-modal {
-  background-color: #CCCCCC;
-  border: 1px solid #377ba8;
+  background-color: #CCCCCCb4;
+  border: 1px solid var(--dark_gray);
+  border-radius: .35em;
   position: fixed;
   z-index: 1;
+  display: none;
+  padding: 1em;
+  margin: .25em;
+}
+
+.ui_modal input {
+    font-family: "Lato", sans-serif;
+
 }
 
 
-#status { 
+#new_song_btn { 
+    padding-top:    .05em;
+    padding-bottom: .25em;
+}
+
+
+.edit_song_button {
+    display: inline-block;
+    float: right;
+    height: 1em;
+}
+
+.edit_song {
+    height: 100%;
+}
+
+#outer_set_div .edit_song {
+    display: none;
+}
+
+
+#status  { 
   display: none;
+}
+
+#published {
+    display: none;
+}
+
+#message {
+    display: none;
+}
+
+.status-indicator {
+  position: absolute;
+  top: .5em;
+  left: 45%;
+  background: var(--notify_yellow);
+  border: 1px solid var(--normal_gray);
+  border-radius: .3em;
+  padding: .5em 1em;
 }
 
 .visible { 

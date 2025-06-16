@@ -6,15 +6,25 @@
 <script type="text/javascript" src="{{ url_for('static', filename='script.js')}}"></script>
 
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Lato&display=swap" rel="stylesheet">
+
 <!-- <script type="text/javascript" src="{{ url_for('static', filename='DragDropTouch.js')}}"></script> --> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 <body>
+    <div id="outer-wrapper">
     {% block setlists %}
-        <h1>Build & Edits Song Lists</h1>
+        <h1>Build & Edit Song Lists</h1>
+
+
+
+        <div id = 'outer_set_div'>
         <h2>Sets</h2>
     
-        <form name="set_selection" method='POST' action="{{ url_for('changeset') }}" enctype="multipart/form-data">
+        <form id='set-selection' name="set_selection" method='POST' action="{{ url_for('changeset') }}" enctype="multipart/form-data">
     
             <select id = 'set_selector' name="set_selector">
                 {% for set in sets %}
@@ -33,9 +43,7 @@
             <input type = 'submit' id="goto-different-set-button" value = 'go'>
         </form>
 
-
-    <br>
-        <img src="{{ url_for('static', filename = 'new-set.png') }}" id="newsetbutton">
+        <button id = 'newsetbutton2'>new</button>
         <div class="ui-modal" id = 'newsetpicker'>
              <form name="newset" method="POST" enctype="multipart/form-data"
               action="{{ url_for('newset') }}">
@@ -45,7 +53,9 @@
         </div>
 
 
-<div id="status" class="status-indicator">Saved!</div>
+<div id="status"    class="status-indicator">Saved!    </div>
+<div id="published" class="status-indicator">Published!</div>
+<div id="message" class="status-indicator">{{ message }}</div>
 
     {% endblock %}
 
@@ -61,29 +71,37 @@
                     </li>
                 {% endfor %}
             </div>
-        <a href = {{ url_for('publish_set', the_set_id = selected_set)  }} >
-            <img src = {{ url_for('static', filename = 'publish-set.png') }}>
+        <a href = {{ url_for('publish_set', the_set_id = selected_set)  }} class = 'btn'>
+            <span >publish</span>
+            <!-- <img src = {{ url_for('static', filename = 'publish-set.png') }}> --> 
         </a>
+		<a href='http://barnchurch.space/worship' class="btn"><span >your hymnal</span></a>
     {% endblock%}
+    </div>
 
+
+
+    <div id = 'outer_songs_div'>
     {% block allsongs %}
     <h2>Songs</h2>
-    <a href=" {{ url_for('editsong', the_song_id = 99999999) }}">
-        <span class = 'button'>New Song</span>
-    </a>
     <br>
     <input type="text" placeholder="search" onkeyup="filterSongs()" id="songsearch">
+    <a href=" {{ url_for('editsong', the_song_id = 99999999) }}" class="btn" id="new_song_btn">
+        <span class = 'button'>new</span>
+    </a>
     <ul id="all_songs">
         {% for song in songs %}
                 <li id="{{ song['song_id'] }}" draggable="true">
                     {{ song['song_name'] }}
-                    <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
+                    <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" class="edit_song_button">
                         <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">
                     </a>
                 </li>
         {% endfor %}
     </ul>
     {% endblock %}
+    </div>
+</div>
 </body>
 
 

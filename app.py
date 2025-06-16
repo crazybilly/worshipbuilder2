@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 from flask import Flask, render_template, redirect, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -7,10 +8,10 @@ root_path = os.path.realpath(__file__)[:-len(os.path.basename(__file__))]
 static_path = root_path + 'static\\'
 
 
-from creds import db_user, db_pass
+from creds import db_user, db_pass, host_addr
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+pymysql://' + db_user + ':' + db_pass + '@192.168.2.75/barnchurch?charset=utf8mb4'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mariadb+pymysql://' + db_user + ':' + db_pass + '@' + host_addr + '/barnchurch?charset=utf8mb4'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Recommended to disable for performance
 
 db=SQLAlchemy(app)
@@ -103,7 +104,7 @@ def save_a_set(the_set_id, the_song_ids, db = db):
 
 @app.route('/sets/<int:selected_set>')
 @app.route('/')
-def get_songs(selected_set=None):
+def get_songs(selected_set=None, message=None):
     songs = db.session.query(Songs).order_by(Songs.song_name).all()
     sets = db.session.query(Sets).order_by(Sets.set_date.desc()).all()
 
@@ -112,7 +113,13 @@ def get_songs(selected_set=None):
 
     songs_in_this_set = get_songs_by_set(selected_set)
 
-    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set, selected_set = selected_set)
+
+    if message is None :
+        message = ''
+    
+    print(message)
+
+    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set, selected_set = selected_set, message=message)
 
 
 
@@ -146,6 +153,22 @@ def editsong(the_song_id):
 
     return render_template('editsong.html', the_song = the_song, possible_keys = possible_keys)
 
+
+@app.route('/savesong', methods=['POST'])
+def savesong():
+    song_id     = request.form['song_id']
+    song_name   = request.form['song_name']
+    song_key    = request.form['song_key']
+    song_lyrics = request.form['song_lyrics']
+
+    the_song_in_db = db.session.query(Songs).filter(Songs.song_id == song_id).first()
+
+    the_song_in_db.song_name   = song_name
+    the_song_in_db.song_key    = song_key
+    the_song_in_db.song_lyrics = song_lyrics
+    db.session.commit()
+
+    return redirect(url_for('get_songs'))
 
 
 
@@ -229,13 +252,14 @@ def publish_set(the_set_id):
     rscript_command = 'Rscript -e ' + rmarkdown_command
 
     os.system(rscript_command)
+
+    shutil.copy('output/fullset.html', '/var/www/html/worship/index.html')
     
     # copy to location (or maybe don't! just point the big link at the actual file? )
     # add link to UI
 
 
-    return redirect(url_for('get_songs', selected_set=the_set_id))
-
+    return redirect(url_for('get_songs', selected_set=the_set_id, message = 'Published!'))
 
 
 
