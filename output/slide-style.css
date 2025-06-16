@@ -36,6 +36,13 @@ body {
   color: whitesmoke;
 }
 
+.songkey {
+    display: block;
+    float: right;
+    font-size: 1.5em;
+    color: #555555;
+}
+
 /*
 
 @media (orientation: landscape) {

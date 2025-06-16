@@ -104,7 +104,7 @@ def save_a_set(the_set_id, the_song_ids, db = db):
 
 @app.route('/sets/<int:selected_set>')
 @app.route('/')
-def get_songs(selected_set=None, message=None):
+def get_songs(selected_set=None):
     songs = db.session.query(Songs).order_by(Songs.song_name).all()
     sets = db.session.query(Sets).order_by(Sets.set_date.desc()).all()
 
@@ -113,17 +113,16 @@ def get_songs(selected_set=None, message=None):
 
     songs_in_this_set = get_songs_by_set(selected_set)
 
+    msg = ''
 
-    if message is None :
-        message = ''
-    
-    print(message)
+    if 'msg' in request.args:
+        msg = request.args.get('msg')
 
-    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set, selected_set = selected_set, message=message)
-
+    return render_template('setbuilder.html', songs = songs, sets =sets, songs_in_this_set = songs_in_this_set, selected_set = selected_set, msg = msg )
 
 
 
+# changes to a different set and loads that set's songs
 @app.route('/changeset', methods=['POST'])
 def changeset():
     the_selected_set = request.form['set_selector']
@@ -156,19 +155,29 @@ def editsong(the_song_id):
 
 @app.route('/savesong', methods=['POST'])
 def savesong():
+        
     song_id     = request.form['song_id']
     song_name   = request.form['song_name']
     song_key    = request.form['song_key']
     song_lyrics = request.form['song_lyrics']
 
-    the_song_in_db = db.session.query(Songs).filter(Songs.song_id == song_id).first()
 
-    the_song_in_db.song_name   = song_name
-    the_song_in_db.song_key    = song_key
-    the_song_in_db.song_lyrics = song_lyrics
-    db.session.commit()
+    if len(str(song_id).strip()) > 0 : 
 
-    return redirect(url_for('get_songs'))
+        the_song_in_db = db.session.query(Songs).filter(Songs.song_id == song_id).first()
+
+        the_song_in_db.song_name   = song_name
+        the_song_in_db.song_key    = song_key
+        the_song_in_db.song_lyrics = song_lyrics
+        db.session.commit()
+    else :
+        the_song_in_db = list()
+        newsong_fields = Songs(song_name = song_name, song_key = song_key, song_lyrics = song_lyrics)
+        db.session.add(newsong_fields)
+        db.session.commit()
+
+
+    return redirect(url_for('get_songs', msg = 'Song Saved!'))
 
 
 
@@ -181,7 +190,7 @@ def newset():
     db.session.add(Sets(set_date = newset_date))
     db.session.commit()
 
-    return redirect(url_for('get_songs'))
+    return redirect(url_for('get_songs', msg = 'Set Created!'))
 
 
 
@@ -198,7 +207,7 @@ def save_sets():
 
     save_a_set(the_set_id=the_selected_set, the_song_ids=the_set_order, db = db)
 
-    return redirect(url_for('get_songs'))
+    return redirect(url_for('get_songs', msg = 'Saved!'))
 
 
 @app.route('/publish_set/<int:the_set_id>')
@@ -233,7 +242,11 @@ def publish_set(the_set_id):
     the_rmd = the_rmd + md_header 
 
     for song in songs_in_set :
-        the_rmd = the_rmd + '\n' + song.song_lyrics + '\n<span class="songkey">' + song.song_key + '</span>\n\n\n'
+
+        the_content = re.sub('\n', '\n<span class="songkey">' + song.song_key + '</span>\n', song.song_lyrics, 1)
+
+        # the_rmd = the_rmd +  '\n<span class="songkey">' + song.song_key + '</span>\n' + song.song_lyrics + '\n\n'
+        the_rmd = the_rmd +  the_content + '\n\n\n'
 
     the_rmd = the_rmd + md_communion + '\n'
     the_rmd = the_rmd + '[lectionary](' + liturgical_sunday.sunday_url + ')'
@@ -259,7 +272,7 @@ def publish_set(the_set_id):
     # add link to UI
 
 
-    return redirect(url_for('get_songs', selected_set=the_set_id, message = 'Published!'))
+    return redirect(url_for('get_songs', selected_set=the_set_id, msg = 'Published!'))
 
 
 

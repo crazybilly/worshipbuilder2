@@ -59,18 +59,36 @@ const showSavedMessage = () => {
         
 
 const the_message = document.getElementById('message');
-const the_message_str = the_message.textContent.trim;
-console.log(the_message_str)
-console.log(the_message_str.length)
+const the_message_str = the_message.textContent;
 
-if(the_message_str.length > 0 ){
-  the_message.style.display = 'block';
+if(the_message_str.length == 0 ){
+  the_message.style.display = 'none';
+  the_message.classList.add('hidden');
+} else {
+  the_message.style.display = 'block !important';
 }
+
 setTimeout(() => {
   the_message.style.display = 'none'; 
-}, 1500); // Message disappears after 1.5 seconds
+}, 3000); // Message disappears after 1.5 seconds
 
 
+
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+  }
 
 
         // --- Function to save the state of both lists to the backend ---
@@ -123,6 +141,23 @@ const options = {
     onEnd: function (evt) {
         // We call our save function whenever an item is moved.
         saveListsState();
+
+      // if ended in the availableList then
+      //       sort availableList
+      //       remove duplicates
+      // consider using 
+      //      evt.item;  // dragged HTMLElement
+		  //      evt.to;    // target list
+      if(evt.to == availableList) {
+        console.log('you dropped onto the song list');
+        dragged_song = evt.item;
+        newly_available_ids = Array.from(availableList.querySelectorAll('li')).map(li => li.id);
+
+        filtered_array = newly_available_ids.filter(the_id => the_id == dragged_song.id)
+        if (filtered_array.length > 1 ){
+            dragged_song.style.display = 'none';
+        }
+      } 
     }
 };
 

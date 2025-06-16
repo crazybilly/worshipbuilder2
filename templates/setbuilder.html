@@ -19,8 +19,6 @@
     {% block setlists %}
         <h1>Build & Edit Song Lists</h1>
 
-
-
         <div id = 'outer_set_div'>
         <h2>Sets</h2>
     
@@ -52,10 +50,7 @@
              </form>
         </div>
 
-
-<div id="status"    class="status-indicator">Saved!    </div>
-<div id="published" class="status-indicator">Published!</div>
-<div id="message" class="status-indicator">{{ message }}</div>
+    <div id="message"   class="status-indicator">{{ msg }}</div>
 
     {% endblock %}
 
@@ -65,7 +60,7 @@
                 {% for song in songs_in_this_set %}
                     <li id="{{ song['song_id'] }}">
                         {{ song['song_name'] }}
-                        <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" >
+                        <a href = "{{ url_for('editsong', the_song_id = song['song_id'])  }}" class="edit_song_button">
                             <img class = 'edit_song' id= "edit_song_{{ song['song_id'] }}" src=" {{ url_for('static', filename = 'edit-song.png') }}">
                         </a>
                     </li>

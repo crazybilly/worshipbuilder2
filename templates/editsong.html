@@ -5,21 +5,21 @@
 
 
 <body>
-
+<div id = 'outer-wrapper' class="song-editor">
 {% block editor %}
 
 {% for the_song in the_song %}
 <form action="{{ url_for('savesong') }}" method = "POST">
     <input type="hidden" name='song_id'   value="{{ the_song['song_id']   }}">
-    <input type='text'   name='song_name' value="{{ the_song['song_name'] }}">
-    <select name='song_key'>
+    <input id = 'song_name' type='text'   name='song_name' value="{{ the_song['song_name'] }}">
+    <select name='song_key' id = 'song_key'>
     {% for the_key in possible_keys %}
         <option  {%if the_key == the_song['song_key'] %} selected="selected"  {% endif %} >
             {{the_key}}
         </option>
     {% endfor %}
     </select>
-    <textarea cols='65' rows = '40' name='song_lyrics'>{{ the_song['song_lyrics'] }}</textarea>
+    <textarea id = 'song_lyrics' cols='65' rows = '40' name='song_lyrics' placeholder = 'Write song lyrics here. Title each slide with a line starting with &quot;##&quot;. End a line with <br> to force a line break.'>{{ the_song['song_lyrics'] }}</textarea>
     <br>
     <button type="button" class="button" onclick="window.history.back();">Cancel</button>
     <input type='submit' value='Save'>
@@ -27,4 +27,5 @@
 {% endfor %}
 
 {% endblock %}
+</div>
 </body>

@@ -1,5 +1,5 @@
 ---
-title: "Trinity Sunday"
+title: "Proper 7"
 output:
   slidy_presentation:
     css: slide-style.css
@@ -14,99 +14,145 @@ knitr::opts_knit$set(root.dir = '../../')
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, results = 'asis')
 ```
-
-## Filled with Your Glory Verse 1
-In my heart, in my heart<br>
-there's a fire burning<br>
-A passion deep within my soul<br>
-Not slowing down, not growing cold<br>
-An unquenchable flame<br>
-that keeps burning brighter<br>
-A love that's blazing like the sun<br>
-For who You are and what You've done<br>
-And as the fire is raging on<br>
-So Your praise becomes my song<br>
-
-## Filled with Your Glory Chorus 
-The whole earth<br>
-Is filled with Your glory, Lord<br>
-Angels and men adore<br>
-Creation longs for what's in store<br>
-May You be<br>
-Honored and glorified<br>
-Exalted and lifted high<br>
-Here at Your feet I lay my life<br>
-
-## Filled with Your Glory Verse 2
-From the ends of the earth<br>
-To the heights of Heaven<br>
-Your glory, Lord, is far and wide<br>
-Through history You reign on high<br>
-From the depths of the sea<br>
-To the mountain's summit<br>
-Your power, Lord, it knows no bounds<br>
-A higher love cannot be found<br>
-So let the universe proclaim<br>
-Your great power and Your great name<br>
-
-
-## Filled with Your Glory Chorus 
-The whole earth<br>
-Is filled with Your glory, Lord<br>
-Angels and men adore<br>
-Creation longs for what's in store<br>
-May You be<br>
-Honored and glorified<br>
-Exalted and lifted high<br>
-Here at Your feet I lay my life<br>
-
-## Filled with Your Glory Chorus  (Last)
-The whole earth<br>
-Is filled with Your glory, Lord<br>
-Mountains bow and oceans roar<br>
-Creation longs for what's in store<br>
-May You be<br>
-Honored and glorified<br>
-Exalted and lifted high<br>
-Here at Your feet I lay my life<br>
-<span class="songkey"></span>
-
-
-
-## Tis So Sweet to Trust In Jesus Verse 1
-'Tis so sweet to trust in Jesus<br>
-and to take him at his word<br>
-just to rest upon his promise<br>
-and to know, "Thus saith the Lord."<br><br>
-
-Jesus, Jesus, how I trust him<br>
-How I've proved him o'er and o'er<br>
-Jesus, Jesus, precious Jesus<br>
-O for grace to trust him more<br>
-
-## Tis So Sweet to Trust In Jesus Verse 2
-O how sweet to trust in Jesus<br>
-just to trust his cleansing blood<br>
-and in simple faith to plunge me<br>
-neath the healing, cleansing flood!<br><br>
-
-Jesus, Jesus, how I trust him<br>
-How I've proved him o'er and o'er<br>
-Jesus, Jesus, precious Jesus<br>
-O for grace to trust him more<br>
-
-## Tis So Sweet to Trust In Jesus Verse 3 (Last)
-Yes, 'tis sweet to trust in Jesus<br>
-just from sin and self to cease<br>
-just from Jesus simply taking<br>
-life and rest, and joy and peace.<br><br>
-
-Jesus, Jesus, how I trust him<br>
-How I've proved him o'er and o'er<br>
-Jesus, Jesus, precious Jesus<br>
-O for grace to trust him more<br>
-
+## All Who Are Thirsty Verse 1
 <span class="songkey">G</span>
+All who are thirsty<br>
+All who are weak<br>
+Come to the fountain<br>
+Dip your heart in the stream of life<br><br>
+
+Let the pain and the sorrow<br>
+Be washed away<br>
+In the waves of His mercy<br>
+As deep cries out to deep<br><br>
+
+Come Lord Jesus come<br>
+Come Lord Jesus come<br>
+
+## All Who Are Thirsty Verse 2 (Last)
+All who are thirsty<br>
+All who are weak<br>
+Come to the fountain<br>
+Dip your heart in the stream of life<br><br>
+
+Let the pain and the sorrow<br>
+Be washed away<br>
+In the waves of His mercy<br>
+As deep cries out to deep<br><br>
+
+Come Lord Jesus come<br>
+Come Lord Jesus come<br>
+Come Lord Jesus come<br>
+Come Lord Jesus come<br>
+
+
+## A Mighty Fortress Is Our God Verse 1
+<span class="songkey">G</span>
+A mighty fortress is our God<br>
+a bulwark never failing<br>
+our helper he, amid the flood<br>
+of mortal ills prevailing<br>
+For still our ancient foe<br>
+does seek to work us woe<br>
+his craft and power are great<br>
+and armed with cruel hate<br>
+on earth is not his equal<br>
+
+## A Mighty Fortress Is Our God Verse 2
+Did we in our own strength confide<br>
+our striving would be losing<br>
+were not the right Man on our side<br>
+the Man of God's own choosing<br>
+You ask who that may be<br>
+Christ Jesus, it is he<br>
+Lord Sabaoth his name<br>
+from age to age the same<br>
+and he must win the battle<br>
+
+## A Mighty Fortress Is Our God Verse 3
+And though this world, with devils filled<br>
+should threaten to undo us<br>
+we will not fear, for God has willed<br>
+his truth to triumph through us<br>
+The prince of darkness grim<br>
+we tremble not for him<br>
+his rage we can endure<br>
+for lo! his doom is sure<br>
+one little word shall fell him<br>
+
+## A Mighty Fortress Is Our God Verse 4 (Last)
+That Word above all earthly powers<br>
+no thanks to them abideth<br>
+the Spirit and the gifts are ours<br>
+through him who with us sideth<br>
+Let goods and kindred go<br>
+this mortal life also<br>
+the body they may kill<br>
+God's truth abideth still<br>
+his kingdom is forever<br>
+
+
+## 10000 Reasons Chorus
+<span class="songkey">D</span>
+Bless the Lord O my soul<br>
+O my soul<br>
+Worship His Holy name<br>
+Sing like never before<br>
+O my soul<br>
+I’ll worship Your Holy name<br>
+
+## 10000 Reasons Verse 1a
+The sun comes up<br>
+It’s a new day dawning<br>
+It’s time to sing Your song again<br>
+Whatever may pass<br>
+And whatever lies before me<br>
+Let me be singing<br>
+When the evening comes<br>
+
+## 10000 Reasons Chorus
+Bless the Lord O my soul<br>
+O my soul<br>
+Worship His Holy name<br>
+Sing like never before<br>
+O my soul<br>
+I’ll worship Your Holy name<br>
+
+## 10000 Reasons Verse 2a
+You’re rich in love<br>
+And You’re slow to anger<br>
+Your name is great<br>
+And Your heart is kind<br>
+For all Your goodness<br>
+I will keep on singing<br>
+Ten thousand reasons<br>
+For my heart to find<br>
+
+## 10000 Reasons Chorus
+Bless the Lord O my soul<br>
+O my soul<br>
+Worship His Holy name<br>
+Sing like never before<br>
+O my soul<br>
+I’ll worship Your Holy name<br>
+
+## 10000 Reasons Verse 3a
+And on that day<br>
+When my strength is failing<br>
+The end draws near<br>
+And my time has come<br>
+Still my soul will<br>
+Sing Your praise unending<br>
+Ten thousand years<br>
+And then forevermore<br>
+
+## 10000 Reasons Chorus (Last)
+Bless the Lord O my soul<br>
+O my soul<br>
+Worship His Holy name<br>
+Sing like never before<br>
+O my soul<br>
+I’ll worship Your Holy name<br>
 
 
 ## Communion
@@ -119,4 +165,4 @@ For whenever you eat this bread and drink this cup, you proclaim the Lord's deat
 ## Talking Time
 
 
-[lectionary](https://lectionary.library.vanderbilt.edu/texts/?y=384&z=p&d=52)
+[lectionary](https://lectionary.library.vanderbilt.edu/texts/?y=384&z=p&d=61)
